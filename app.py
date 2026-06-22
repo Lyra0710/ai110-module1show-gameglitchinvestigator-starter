@@ -1,6 +1,8 @@
 import random
 import streamlit as st
 
+from logic_utils import new_game_state
+
 def get_range_for_difficulty(difficulty: str):
     if difficulty == "Easy":
         return 1, 20
@@ -128,10 +130,8 @@ with col2:
     new_game = st.button("New Game 🔁")
 with col3:
     show_hint = st.checkbox("Show hint", value=True)
-# Fix me: Logic breaks here. 
 if new_game:
-    st.session_state.attempts = 0
-    st.session_state.secret = random.randint(1, 100)
+    st.session_state.update(new_game_state(low, high))
     st.success("New game started.")
     st.rerun()
 
