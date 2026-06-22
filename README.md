@@ -25,8 +25,8 @@ It wrote the code, ran away, and now the game is unplayable.
 
 ## 📝 Document Your Experience
 
-- [ Game Glitch Investigator is a Streamlit-based number guessing game used as a debugging exercise. The player picks a difficulty (Easy, Normal, or Hard), and the app generates a secret number within that difficulty's range. On each guess, the game gives a "Too High" / "Too Low" hint to steer the player toward the secret, tracks attempts against a per-difficulty limit, and updates a running score until the player either guesses correctly or runs out of attempts. The real purpose of the project, though, is to investigate and repair an intentionally broken AI-generated app. Finding and fixing logic and Streamlit state bugs (reversed hints, miscounted attempts, a "New Game" button that doesn't reset, and a secret that resets on every click), then refactoring the logic into logic_utils.py and verifying the fixes with pytest.]
-- [
+- About the task: Game Glitch Investigator is a Streamlit-based number guessing game used as a debugging exercise. The player picks a difficulty (Easy, Normal, or Hard), and the app generates a secret number within that difficulty's range. On each guess, the game gives a "Too High" / "Too Low" hint to steer the player toward the secret, tracks attempts against a per-difficulty limit, and updates a running score until the player either guesses correctly or runs out of attempts. The real purpose of the project, though, is to investigate and repair an intentionally broken AI-generated app. Finding and fixing logic and Streamlit state bugs (reversed hints, miscounted attempts, a "New Game" button that doesn't reset, and a secret that resets on every click), then refactoring the logic into logic_utils.py and verifying the fixes with pytest.
+- Bugs Found:
 1. Reversed Higher/Lower hints. When a guess was too high the game said "Go HIGHER!" and when it was too low it said "Go LOWER!" — the hints pointed the wrong way, making the game impossible to win by following them. (in check_guess)
 
 2. Attempt counter bugs. The counter started at 1 on first load but reset to 0 on New Game (inconsistent start), and it was incremented before the input was validated — so typing something invalid like abc still cost the player an attempt.
@@ -34,7 +34,8 @@ It wrote the code, ran away, and now the game is unplayable.
 3. "New Game" didn't start a new game. The button only reset attempts and secret, leaving a stale "won"/"lost" status in session state. Because the script reran from the top and hit that stale status, the game immediately stopped with "You already won." Score and history also carried over.
 
 4. New Game ignored difficulty. The secret on a new game was drawn from a hardcoded 1–100 instead of the selected difficulty's range, so on Easy/Hard it could be outside the displayed range.] 
-- [ 1. Corrected the hint direction. In check_guess, I swapped the messages so a too-high guess now says "Go LOWER!" and a too-low guess says "Go HIGHER!", so the hints point toward the secret.
+- How I fixed bugs:
+1. Corrected the hint direction. In check_guess, I swapped the messages so a too-high guess now says "Go LOWER!" and a too-low guess says "Go HIGHER!", so the hints point toward the secret.
 
 2. Fixed attempt counting. I set the starting value to 0 so it matches the New Game reset, and moved the attempts += 1 increment into the valid-guess branch (after parse_guess succeeds). Now invalid input shows an error without spending an attempt.
 
