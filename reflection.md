@@ -5,8 +5,12 @@ Answer each question in 3 to 5 sentences. Be specific and honest about what actu
 ## 1. What was broken when you started?
 
 - What did the game look like the first time you ran it?
+I used the developer debug info to see the number to be guessed and entered it to test. It worked successfully. 
 - List at least two concrete bugs you noticed at the start  
-  (for example: "the hints were backwards").
+1. Attempt counting is off by 1
+2. Higher and lower are mixed up
+3. Hard range is 1 to 50, but the game still plays 1 to 100. Same with easy. 
+4. New game does not work. 
 
 **Bug Reproduction Log**
 
@@ -14,18 +18,19 @@ Document at least 3 bugs you found. Add rows as needed.
 
 | Input | Expected Behavior | Actual Behavior | Console Output / Error |
 |-------|-------------------|-----------------|------------------------|
-| | | | |
-| | | | |
-| | | | |
+|30 |Go HIGHER! | Go LOWER! |none |
+|abc| Invalid Input, Attempts remain the same| Attempts down by 1 |None|
+| New game| New game session| 'You already won. Start a new game to play again. |None |
 
 ---
 
 ## 2. How did you use AI as a teammate?
 
 - Which AI tools did you use on this project (for example: ChatGPT, Gemini, Copilot)?
+I primarily used Chat GPT and Claude. 
 - Give one example of an AI suggestion that was correct (including what the AI suggested and how you verified the result).
 - Give one example of an AI suggestion that was incorrect or misleading (including what the AI suggested and how you verified the result).
-
+1. When I asked Claude to fix the hint issue, it first suggested to remove the checks for the invalid inputs and also removed the lines that checked if the guess is the secret number.
 ---
 
 ## 3. Debugging and testing your fixes
